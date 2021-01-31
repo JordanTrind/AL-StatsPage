@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>Unknown Error!</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Roleplay UK - Stats">
+    <meta name="keywords" content="Stats,roleplay,uk,name,playerid,guid,RoleplayUK,altislife,altis,life">
+    <meta name="author" content="RoleplayUK Development Team">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="../assets/js/urlParse.js"></script>
+
+  </head>
+  <body>
+    <div id="container">
+      <div id="container--nav">
+        <div id="inner--nav" class="">
+          <a href="index.html"><img src="assets/img/RPLogo.png" class="nav__logo" /></a>
+          <a href="../index.html" class="first after"><span class="nav_item fromLeft" data-hover="LEADERBOARDS">LEADERBOARDS</span></a>
+          <a href="https://www.roleplay.co.uk" class="first after"><span class="nav_item fromLeft" data-hover="FORUMS">FORUMS</span></a>
+        </div>
+      </div>
+      <div id="container--results">
+        <div id="container--card">
+          <div class="fourofourc card">
+            <span class="fourofour">500</span><br/>
+            <span class="fourofour-info">The server encountered an error and could not complete your request. If the problem persists, please <a href="https://www.roleplay.co.uk/profile/19867-vaffla/">report</a> it and mention this error message and the query that caused it (by copy and pasting the information from the box below).<br/>
+            <div class="codeContainer">
+              <code id="errorInfo">
+                Infromation about the error will go here
+              </code>
+            </div>
+            <br/><span class="muted">That's all we know.</span><br/>
+            <br/><a href="index.html" class="button">Oops! Take me back!</a></span>
+          </div>
+        </div>
+
+        <br/>
+        <div id="container--card">
+          <div class="card">
+            Copyright © 2014 - <script type="text/javascript">document.write(new Date().getFullYear());</script> <a href="https://www.roleplay.co.uk">RoleplayUK</a>, All Rights Reserved.
+          </div>
+          <br/>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+    document.getElementById("errorInfo").innerHTML = "<b>Error Code</b>: ";
+    var errorCode = document.createTextNode(urlParams['errorCode'][0]);
+    document.getElementById("errorInfo").appendChild(errorCode);
+    document.getElementById("errorInfo").innerHTML += "<br/>";
+    document.getElementById("errorInfo").innerHTML += "<b>Stats Query:</b> ";
+    var errorQ = document.createTextNode(urlParams['errorQ'][0] + "&q=" + urlParams['q'][0]);
+    document.getElementById("errorInfo").appendChild(errorQ)
+    document.getElementById("errorInfo").innerHTML += "<br/>";
+    ;document.getElementById("errorInfo").innerHTML += "<b>API Query:</b> ";
+    var errorQ = document.createTextNode(urlParams['apiQ'][0]);
+    document.getElementById("errorInfo").appendChild(errorQ);
+    document.getElementById("errorInfo").innerHTML += "<br/>";
+    document.getElementById("errorInfo").innerHTML += "<b>Time</b>: " + new Date() + "<br/>";
+    document.getElementById("errorInfo").innerHTML += "<b>Browser</b>: " +  navigator.appCodeName + " - " + navigator.appVersion;
+    </script>
+
+  </body>
+</html>

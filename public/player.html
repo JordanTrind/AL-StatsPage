@@ -1,0 +1,514 @@
+<html>
+  <head>
+    <title>Roleplay UK - Stats</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Roleplay UK - Stats">
+    <meta name="keywords" content="Stats,roleplay,uk,name,playerid,guid,RoleplayUK,altislife,altis,life">
+    <meta name="author" content="RoleplayUK Development Team">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="../assets/js/urlParse.js"></script>
+
+    <script type="text/javascript">
+    var playerIdExpression = new RegExp("765611[0-9]{11}$");
+    var guidExpression = new RegExp("[a-f0-9]{32}$");
+
+    try {
+      if (typeof urlParams['q'][0] == 'undefined') {
+        window.location.replace("https://stats.roleplay.co.uk/400.html");
+      }
+    } catch (err) {
+        window.location.replace("https://stats.roleplay.co.uk/400.html");
+    }
+
+    if (playerIdExpression.test(urlParams['q'][0]) == false && guidExpression.test(urlParams['q'][0]) == false) {
+      window.location.replace("https://stats.roleplay.co.uk/404.html");
+    } else {
+      var request = "https://api.roleplay.co.uk/v1/player/" + urlParams['q'][0];
+    }
+
+    var leaderBoardsRequest = "https://api.roleplay.co.uk/v1/statistics/leaderboards";
+    var leaderboardsData = "";
+
+    var data = "";
+
+    function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function error(data) {
+      console.log(url);
+      var playerIdExpression = new RegExp("765611[0-9]{11}$");
+      var guidExpression = new RegExp("[a-f0-9]{32}$");
+      var request = "https://api.roleplay.co.uk/v1/player/" + urlParams['q'][0];
+      try {
+        if (typeof urlParams['q'][0] !== 'undefined') {
+          if (playerIdExpression.test(urlParams['q'][0]) == false && guidExpression.test(urlParams['q'][0]) == false) {
+            window.location.replace("https://stats.roleplay.co.uk/400.html");
+          } else {
+            window.location.replace("https://stats.roleplay.co.uk/error.html?errorCode=500&errorQ=" + window.location.href.substring(0, window.location.href.indexOf("?q=")) + "&q=" + urlParams['q'][0] + "?apiQ=" + request);
+          }
+        } else {
+          window.location.replace("https://stats.roleplay.co.uk/400.html");
+        }
+      } catch(err) {
+        window.location.replace("https://stats.roleplay.co.uk/404.html");
+      }
+    }
+
+    function success(data) {
+      console.log(data);
+      var isPolice = false;
+      var isUNMC = false;
+      var isNHS = false;
+      var isGroup = false;
+
+      var playerName = data['name'];
+      var playerID = data['steamid'];
+      var steamName = data.steam['name'];
+      var playerWorth = "£" + numberWithCommas(data['bank'] + data['cash']);
+      var bank = "£" + numberWithCommas(data['bank']);
+      var cash = "£" + numberWithCommas(data['cash']);
+      var playerGroups = [];
+      var wanted = data['wanted'];
+      var vehicleCount = data['vehicles']['length'];
+      var playerAdmin = "Not Staff";
+      var prank = "Not Police";
+      var nhsrank = "Not NHS";
+      var urank = "Not UNMC";
+      var undercover = data['undercoverrank'];
+      var licencesall = data.civ_licenses;
+      var licencesfinal = [];
+
+      document.title = playerName + " - Roleplay UK - Stats";
+
+      for (l = 0; l < data.civ_licenses['length']; l++) {
+        if (data.civ_licenses[l].owned == true) {
+          licencesfinal.push(data.civ_licenses[l]);
+        }
+      }
+
+      switch (wanted) {
+        case true:
+          wanted = "Yes";
+          break;
+        case false:
+          wanted = "No";
+          break;
+      }
+
+      var guid = data['guid'];
+
+      if (data['policerank'] > 0) {
+        playerGroups.push("Altis Police");
+
+        var units = [];
+
+        switch (data['arrank']) {
+          case 0:
+            break;
+          case 1:
+            units.push("Armed Response");
+            break;
+        }
+        switch (data['ncarank']) {
+          case 0:
+            break;
+          case 1:
+            units.push("National Crime Agency");
+            break;
+        }
+        switch (data['npasrank']) {
+          case 0:
+            break;
+          case 1:
+            units.push("NPAS Tier 1");
+            break;
+          case 2:
+            units.push("NPAS Tier 2");
+            break;
+          case 3:
+            units.push("NPAS Tier 3");
+            break;
+        }
+
+        switch (data['mporank']) {
+          case 0:
+            break;
+          case 1:
+            units.push("MPO Tier 1");
+            break;
+          case 2:
+            units.push("MPO Tier 2");
+            break;
+        }
+
+        switch (undercover) {
+          case "1":
+            units.push("Undercover Permit");
+            break;
+        }
+
+        if (units.length == 0) {
+          units = "None";
+        }
+
+        for (f = 0; f < units.length; f++) {
+          if (units.length == 5) {
+            units = "All";
+          } else if (f != units.length && f != 0) {
+            units[f] = " " + units[f];
+          }
+          console.log(units);
+        }
+
+        switch (data['policerank']) {
+          case 1:
+            var prank = "Police Community Support Officer";
+            break;
+          case 2:
+            var prank = "Probationary Police Constable";
+            break;
+          case 3:
+            var prank = "Police Constable";
+            break;
+          case 4:
+            var prank = "Sergeant";
+            break;
+          case 5:
+            var prank = "Inspector";
+            break;
+          case 6:
+            var prank = "Chief Inspector";
+            break;
+          case 7:
+            var prank = "Superintendent";
+            break;
+          case 8:
+            var prank = "Chief Superintendent";
+            break;
+          case 9:
+            var prank = "Assistant Chief Constable";
+            break;
+          case 10:
+            var prank = "Deputy Chief Constable";
+            break;
+          case 11:
+            var prank = "Chief Constable";
+            break;
+        }
+        isPolice = true;
+      }
+
+      if (data['unmcrank'] > 0) {
+        playerGroups.push("UNMC");
+        switch (data['unmcrank']) {
+          case 1:
+            var urank = "Recruit";
+            break;
+          case 2:
+            var urank = "Private";
+            break;
+          case 3:
+            var urank = "Private First Class";
+            break;
+          case 4:
+            var urank = "Lance Corporal";
+            break;
+          case 5:
+            var urank = "Corporal";
+            break;
+          case 6:
+            var urank = "Sergeant";
+            break;
+          case 7:
+            var urank = "Staff Sergeant";
+            break;
+          case 8:
+            var urank = "Sergeant Major";
+            break;
+          case 9:
+            var urank = "Lieutenant";
+            break;
+          case 10:
+            var urank = "Captain";
+            break;
+          case 11:
+            var urank = "Major";
+            break;
+          case 12:
+            var urank = "Colonel";
+            break;
+          case 13:
+            var urank = "General";
+            break;
+        }
+        isUNMC = true;
+      }
+
+      if (data['nhsrank'] > 0) {
+        playerGroups.push("NHS");
+
+        var nhsunits = [];
+
+        switch (data['nhsarrank']) {
+          case 0:
+            break;
+          case 1:
+            nhsunits.push("Air Rescue Tier 1");
+            break;
+          case 2:
+            nhsunits.push("Air Rescue Tier 2");
+            break;
+          case 3:
+            nhsunits.push("Air Rescue Tier 3");
+            break;
+        }
+        switch (data['nhsrirrank']) {
+          case 0:
+            break;
+          case 1:
+            nhsunits.push("Road Incident Responder");
+            break;
+        }
+
+        if (nhsunits.length == 0) {
+          units = "None";
+        }
+
+        for (g = 0; g < nhsunits.length; g++) {
+          if (g != nhsunits.length && g != 0) {
+            nhsunits[g] = " " + nhsunits[g];
+          }
+        }
+
+          switch (data['nhsrank']) {
+            case 1:
+              var nhsrank = "Student";
+              break;
+            case 2:
+              var nhsrank = "First Aider";
+              break;
+            case 3:
+              var nhsrank = "Paramedic";
+              break;
+            case 4:
+              var nhsrank = "Surgeon";
+              break;
+            case 5:
+              var nhsrank = "Doctor";
+              break;
+            case 6:
+              var nhsrank = "Consultant";
+              break;
+            case 7:
+              var nhsrank = "NHS Administration";
+              break;
+            case 8:
+              var nhsrank = "Chief Medical Officer";
+              break;
+          }
+        isNHS = true;
+      }
+
+      if (data['grouprank'] > 0) {
+        playerGroups.push(data['groupname']);
+        isGroup = true;
+      }
+
+      if (data['adminlevel'] > 0 && data['adminlevel'] <= 4) {
+        playerAdmin = "Staff Team - Level " + data['adminlevel'];
+      } else if (data['adminlevel'] == 5) {
+        playerAdmin = "Staff Team - Lead " + data['adminlevel'];
+      } else if (data['adminlevel'] == 6) {
+        playerAdmin = "Management";
+      } else if (data['adminlevel'] == 7) {
+        playerAdmin = "Developer";
+      }
+      //Putting the commas in the right places and formatting it nicely
+
+      if (playerGroups.length == 0) {
+        playerGroups = "None";
+      }
+
+      for (i = 0; i <= playerGroups.length; i++) {
+        if (i != playerGroups.length && i != 0) {
+          playerGroups[i] = " " + playerGroups[i]
+        }
+      }
+
+      if (data['groupname'] == null) {
+        data['groupname'] = "<b>Not in a group</b>";
+      }
+
+      document.getElementById("playerName").innerHTML = playerName;
+      document.getElementById("playerGroupAffiliation").innerHTML = "Affiliated Groups: " + playerGroups;
+      document.getElementById("playerTotalMoney").innerHTML = playerWorth;
+      document.getElementById("playerID").innerHTML = "<a href=https://steamcommunity.com/profiles/" + playerID + " title="+ escape(steamName) + ">" + playerID + "</a>";
+      document.getElementById("playerGUID").innerHTML = guid;
+      document.getElementById("left10").innerHTML = "<img src='" + data.steam['avatarMedium'] + "' alt='Steam Profile Picture' />"
+      document.getElementById("playerBankMoney").innerHTML = bank;
+      document.getElementById("playerCashMoney").innerHTML = cash;
+      document.getElementById("playerWanted").innerHTML = wanted;
+      document.getElementById("playerVehicleCount").innerHTML = vehicleCount;
+      document.getElementById("playerAdmin").innerHTML = playerAdmin;
+      if (prank != "Not Police") {
+        document.getElementById("playerPoliceRank").innerHTML = prank + "<br/>";
+        document.getElementById("playerSpecUnits").innerHTML = "Specialist Units: <b>" + units + "</b>";
+      } else {
+      document.getElementById("playerPoliceRank").innerHTML = prank + "";
+        document.getElementById("playerSpecUnits").style.display = "none";
+      }
+
+      if (nhsrank != "Not NHS") {
+        document.getElementById("playerNHSRank").innerHTML = nhsrank + "<br/>";
+        document.getElementById("playerNHSSpecUnits").innerHTML = "Branches: <b>" + nhsunits + "</b>";
+      } else {
+        document.getElementById("playerNHSRank").innerHTML = nhsrank + "";
+        document.getElementById("playerNHSSpecUnits").style.display = "none";
+      }
+
+      document.getElementById("playerUNMCRank").innerHTML = urank;
+      document.getElementById("groupLabel").innerHTML = data['groupname'];
+
+      if (data['groupname'] != "<b>Not in a group</b>") {
+        document.getElementById("groupLabel").innerHTML = data['groupname'] + ": ";
+        document.getElementById("playerGroupRank").innerHTML = data['grouprank'];
+      }
+
+      if (playerName.length > 13) {
+        playerNameDisplay = playerName.substring(0, 10) + "...";
+      } else {
+        playerNameDisplay = playerName;
+      }
+
+      if (data['forumid'] != null) {
+        document.getElementById("buttons").innerHTML += " <a href='" + data['forumurl'] + "' class='button'>Forum Profile</a>";
+      }
+
+      if (data.steam['profileurl'] != null) {
+          document.getElementById("buttons").innerHTML += " <a href='" + data.steam['profileurl'] + "' class='button'>Steam Profile</a>";
+      }
+
+      document.getElementById("buttons").innerHTML += " <span><a href='https://www.roleplay.co.uk/forms/4-report-a-player/?form_field_26=" + escape(playerName) + "' class='button'>Report</a></span>";
+      document.getElementById("buttons").innerHTML += " <span><a href='https://www.roleplay.co.uk/forum/123-recommend-a-player/?do=add&topic_title=" + escape(playerName) + "&topic_tags=" + playerID +"' class='button'>Recommend</a></span>";
+
+      if (data['policerank'] > 0) {
+        document.getElementById("buttons").innerHTML += " <span><a href='https://www.roleplay.co.uk/forum/66-police-complaints-commission/?do=add&topic_title=" + escape(playerName) + "&topic_tags=" + playerID +"' class='button''>Make a Police Complaint</a></span>";
+      } else if (data['unmcrank'] > 0) {
+        document.getElementById("buttons").innerHTML += " <span><a href='https://www.roleplay.co.uk/forum/302-military-justice-board/?do=add&topic_title=" + escape(playerName) + "&topic_tags=" + playerID +"' class='button''>Make a UNMC Complaint</a></span>";
+      }
+
+      $.ajax({
+        dataType: 'json',
+        url: leaderBoardsRequest,
+        data: leaderboardsData
+      });
+    }
+
+    $.ajax({
+      dataType: 'json',
+      url: request,
+      data: data,
+      success: success,
+      error: error
+    });
+    </script>
+
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="container--nav">
+        <div id="inner--nav" class="">
+          <a href="index.html"><img src="assets/img/RPLogo.png" class="nav__logo" /></a>
+          <a href="../index.html" class="first after"><span class="nav_item fromLeft" data-hover="ComingSoon™">ComingSoon™</span></a>
+          <a href="https://www.roleplay.co.uk" class="first after"><span class="nav_item fromLeft" data-hover="FORUMS">FORUMS</span></a>
+        </div>
+      </div>
+      <div id="container--results">
+        <div id="container--card">
+          <div class="player card">
+            <div id="left10" class="left10">
+              <img src="https://www.roleplay.co.uk/uploads/set_resources_126/84c1e40ea0e759e3f1505eb1788ddf3c_default_photo.png" />
+            </div>
+            <div class="right90">
+              <h1 id="playerName"><b>...</b></h1>
+              <h4 id="playerGroupAffiliation">...</h4>
+              <div class="playerIcons">
+              </div>
+            </div>
+            <br />
+            <div id="buttons">
+            </div>
+            <div class="left50">
+              <br/>
+
+              <div class="playerbox card">
+                <h2>Player Information</h2>
+
+                <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                <span id="label">SteamID</span>: <b><span id="playerID">...</span></b><br/>
+
+                <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                <span id="label">GUID</span>: <b><span id="playerGUID">...</span></b><br/>
+
+              </div>
+              <br/>
+              <div class="card" style="max-height: 246px;">
+                  <h2>Asset Information</h2>
+
+                  <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                  <span id="label">Total Money</span>: <b><span id="playerTotalMoney">...</span></b><br/>
+
+                  <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                  <span id="label">Bank</span>: <b><span id="playerBankMoney">...</span></b><br/>
+
+                  <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                  <span id="label">Cash</span>: <b><span id="playerCashMoney">...</span></b><br/>
+
+                  <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                  <span id="label">Wanted</span>: <b><span id="playerWanted">...</span></b><br/>
+
+                  <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                  <span id="label">Vehicles</span>: <b><span id="playerVehicleCount">...</span></b><br/>
+              </div>
+            </div>
+            <div class="right50">
+              <br />
+              <div class="card">
+                  <h2>Group Information</h2>
+
+                  <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                  <span id="label"></span><b><span id="playerAdmin">...</span></b><br/>
+
+                  <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                  <span id="label">Police Rank</span>: <b><span id="playerPoliceRank">...</span></b>
+                  <span id="playerSpecUnits"></span><br/>
+
+                  <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                  <span id="label">NHS Rank</span>: <b><span id="playerNHSRank">...</span></b>
+                  <span id="playerNHSSpecUnits"></span><br/>
+
+                  <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                  <span id="label">UNMC Rank</span>: <b><span id="playerUNMCRank">...</span></b><br/>
+
+                  <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                  <span id="groupLabel">Group Rank</span><b><span id="playerGroupRank"></span></b><br/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br/>
+        <div id="container--card">
+          <div class="card">
+            Copyright © 2014 - <script type="text/javascript">document.write(new Date().getFullYear());</script> <a href="https://www.roleplay.co.uk">RoleplayUK</a>, All Rights Reserved.
+          </div>
+          <br/>
+        </div>
+      </div>
+  </body>
+</html>

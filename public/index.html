@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>Roleplay UK - Stats</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Roleplay UK - Stats">
+    <meta name="keywords" content="Stats,roleplay,uk,name,playerid,guid,RoleplayUK,altislife,altis,life">
+    <meta name="author" content="RoleplayUK Development Team">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="../assets/js/autoDetect.js"></script>
+    <script src="../assets/js/runBlur.js"></script>
+
+  </head>
+  <body>
+    <div class="blur"></div>
+      <div id="container">
+        <div id="container--nav">
+          <div id="inner--nav" class="">
+            <a href="index.html"><img src="assets/img/RPLogo.png" class="nav__logo" /></a>
+            <a href="../index.html" class="first after"><span class="nav_item fromLeft" data-hover="ComingSoon™">ComingSoon™</span></a>
+            <a href="https://www.roleplay.co.uk" class="first after"><span class="nav_item fromLeft" data-hover="FORUMS">FORUMS</span></a>
+          </div>
+        </div>
+        <div id="container--search">
+          <form action="index.html" method="GET" id="search">
+            <div class="rpuksbc">
+              <input type="text" id="rpuksba" name="q" placeholder="Who are we looking for?" onfocus="this.placeholder = ''; runBlur();" onblur="this.placeholder = 'Who are we looking for?'; runBlur();" />
+              <span class="selectors" id="selectors"><label id="selector--name">Name</label><label id="selector--steamid" style="font-weight: 300;">SteamID</label><label id="selector--guid" style="font-weight: 300;">GUID</label><label id="copyright"><span></span> ©</label></span>
+              <span class="ets"><a href="javascript:{}" onclick="document.getElementById('search').submit();"><i class="material-icons">arrow_forward</i></a></span>
+            </div>
+          </form>
+        </div>
+      </div>
+  </body>
+</html>

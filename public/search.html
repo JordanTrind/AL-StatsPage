@@ -1,0 +1,433 @@
+<html>
+  <head>
+    <title>Roleplay UK - Stats</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Roleplay UK - Stats">
+    <meta name="keywords" content="Stats,roleplay,uk,name,playerid,guid,RoleplayUK,altislife,altis,life">
+    <meta name="author" content="RoleplayUK Development Team">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="../assets/js/urlParse.js"></script>
+    <script src="../assets/js/autoDetect.js"></script>
+
+    <script type="text/javascript">
+    var limit = 250;
+    var start = 0;
+    var data = [];
+    var results = 0;
+    var timeStart = performance.now();
+    var urlParameters = urlParams['q'][0];
+
+    if (typeof urlParameters == 'undefined') {
+      window.location.replace("https://stats.roleplay.co.uk/400.html");
+    }
+
+    var requestQ = "https://api.roleplay.co.uk/v1/search/player?name=" + urlParameters + "&limit=" + limit;
+
+    function urlUpdate() {
+      urlParameters = document.getElementById("rpuksba").value;
+      if (urlParameters.length > 2) {
+        //Stops 400/500 error as API will not allow searches less than 3 chars
+        var newURL = "https://stats.roleplay.co.uk/search.html?q=" + urlParameters;
+        window.history.replaceState(null, null, newURL);
+      }
+    }
+
+    function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function error() {
+      if (urlParameters == "") {
+        window.location.replace("https://stats.roleplay.co.uk/400.html");
+      } else {
+        window.location.replace("https://stats.roleplay.co.uk/error.html?errorCode=500&errorQ=" + window.location.href.substring(0, window.location.href.indexOf("?q=")) + "&q=" + urlParameters + "?apiQ=" + request);
+      }
+    }
+
+    function success(data) {
+      var results = 0;
+      for (i = start; i < data['length']; i++) {
+        if (urlParameters == "tilt") {
+          $("body").addClass("tilt");
+          console.log("tilt");
+        } else if (urlParameters == "spin") {
+          $("body").addClass("barrel");
+          console.log("barrel");
+        }
+
+        var verified = false;
+        var playerGroups = [];
+        var info = "";
+        var special = false;
+        var customEmoji = "";
+
+        switch (data[i]['steamid']) {
+            case "76561198018599051":
+              special = true;
+              info = "You don't worry 'bout fittin in when you custom made";
+              var customEmoji = "🌺";
+              break;
+            case "76561198006341646":
+              info = "Cheap Suits Ltd";
+              special = true;
+              var customEmoji = " 🤵";
+              break;
+            case "76561198125831897":
+              special = true;
+              info = "That's classified";
+              var customEmoji = "🕵️‍";
+              break;
+            case "76561197966629087":
+              info = "SCOTLAND FOREVER";
+              break;
+            case "76561198068283211":
+              info = "<i class='material-icons' style='font-size:larger;'>flight_takeoff</i>";
+              var customEmoji = "✈️";
+              break;
+            case "76561197972444269":
+              info = "</i><><i>";
+              var customEmoji = "";
+              break;
+            case "76561198071480057":
+              special = true;
+              info = "The definition of the North/South divide";
+              var customEmoji = "💪🏻";
+              break;
+            case "76561198058949468":
+              special = true;
+              info = "The only CSI who doesn't live in the North";
+              var customEmoji = "🚜";
+              break;
+            case "76561198079473992":
+              special = true;
+              info = "Once Athira, Always Athira"
+              var customEmoji = "🗿";
+              break;
+            case "76561198059930851":
+              special = true;
+              info = "The most special of snowflakes";
+              var customEmoji = "❄️";
+              break;
+            case "76561198018771836":
+              special = true;
+              var customEmoji = "🍆";
+              break;
+            case "76561198086041122":
+              special = true;
+              var customEmoji = "🍪";
+              info = "Greg's Bakery - Since 1897";
+              break;
+            case "76561198051564429":
+              verified = true;
+              special = true;
+              var customEmoji = "🚁";
+              break;
+            case "76561198077790400":
+              special = true;
+              var customEmoji = "💻";
+              break;
+            case "76561198121547597":
+              special = true;
+              var customEmoji = "🐌";
+              break;
+            case "76561198162754500":
+              special = true;
+              var customEmoji = "🐑";
+              info = "Cymru";
+              break;
+            case "76561198202314056":
+              special = true;
+              var customEmoji = "💖";
+              break;
+            case "76561198050795995":
+              verified = true;
+              special = true;
+              var customEmoji = "🐬";
+              info = "It's ya boi";
+              break;
+          }
+
+          if (data[i]['adminlevel'] > 0 || data[i]['policerank'] > 9 || data[i]['nhsrank'] > 6 || data[i]['unmcrank'] > 10 || verified == true) {
+            verified = true;
+            if (special == true && customEmoji != "") {
+              data[i]['name'] = data[i]['name'] + "<span class='customEmoji'> " + customEmoji + " </span>";
+            } else {
+              data[i]['name'] = data[i]['name'] + " <i class='material-icons' style='color: #77c7f7; font-size:12pt;'>check_circle</i>";
+            }
+          }
+
+          var x = Math.floor(Math.random() * 4);
+          if (info == "") {
+            switch (x) {
+              case 0:
+                if (data[i]['vehicles'] > 0) {
+                  info = "Total Vehicles: " + numberWithCommas(data[i]['vehicles']);
+                  break;
+                } else {
+                  info = "Total Worth: £" + numberWithCommas(data[i]['bank'] + data[i]['cash']);
+                  break;
+                }
+                break;
+              case 1:
+                if (data[i]['bank'] + data[i]['cash'] <= 100000) {
+                  info = "The definition of a hobo";
+                  break;
+                } else {
+                  info = "Total Worth: £" + numberWithCommas(data[i]['bank'] + data[i]['cash']);
+                  break;
+                }
+              case 2:
+                if (data[i]['adminlevel'] > 0 && data[i]['adminlevel'] <= 4) {
+                  info = "Staff Team - Level " + data[i]['adminlevel'];
+                  break;
+                } else if (data[i]['adminlevel'] == 5) {
+                  info = "Staff Team - Lead";
+                  break;
+                } else if (data[i]['adminlevel'] == 6) {
+                  info = "Management";
+                  break;
+                } else if (data[i]['adminlevel'] == 7) {
+                  info = "RPUK Code Monkey";
+                  break;
+                }
+                else {
+                  if (data[i]['bank'] + data[i]['cash'] <= 100000) {
+                    info = "The definition of a hobo";
+                    break;
+                  } else {
+                    info = "Total Worth: £" + numberWithCommas(data[i]['bank'] + data[i]['cash']);
+                    break;
+                  }
+                }
+                break;
+              case 3:
+                if (data[i]['policerank'] > 0) {
+                  switch (data[i]['policerank']) {
+                    case 1:
+                      var prank = "PCSO";
+                      break;
+                    case 2:
+                      var prank = "PC";
+                      break;
+                    case 3:
+                      var prank = "PC";
+                      break;
+                    case 4:
+                      var prank = "SGT";
+                      break;
+                    case 5:
+                      var prank = "INS";
+                      break;
+                    case 6:
+                      var prank = "CI";
+                      break;
+                    case 7:
+                      var prank = "SI";
+                      break;
+                    case 8:
+                      var prank = "CSI";
+                      break;
+                    case 9:
+                      var prank = "ACC";
+                      break;
+                    case 10:
+                      var prank = "DCC";
+                      break;
+                    case 11:
+                      var prank = "CC";
+                      break;
+                  }
+                  playerGroups.push("p");
+                }
+
+                if (data[i]['unmcrank'] > 0) {
+                  switch (data[i]['unmcrank']) {
+                    case 1:
+                      var urank = "Rcr";
+                      break;
+                    case 2:
+                      var urank = "Pvt/Pfc";
+                      break;
+                    case 3:
+                      var urank = "LCpl/Cpl";
+                      break;
+                    case 4:
+                      var urank = "Sgt/SSgt";
+                      break;
+                    case 5:
+                      var urank = "SgtM";
+                      break;
+                    case 6:
+                      var urank = "Lt";
+                      break;
+                    case 7:
+                      var urank = "Cpt";
+                      break;
+                    case 8:
+                      var urank = "Maj";
+                      break;
+                    case 9:
+                      var urank = "Col";
+                      break;
+                    case 10:
+                      var urank = "DMU";
+                      break;
+                    case 11:
+                      var urank = "Gen";
+                      break;
+                  }
+                  playerGroups.push("u");
+                }
+
+                if (data[i]['nhsrank'] > 0) {
+                  switch (data[i]['nhsrank']) {
+                    case 1:
+                      var nhsrank = "Student";
+                      break;
+                    case 2:
+                      var nhsrank = "First Aider";
+                      break;
+                    case 3:
+                      var nhsrank = "Paramedic";
+                      break;
+                    case 4:
+                      var nhsrank = "Surgeon";
+                      break;
+                    case 5:
+                      var nhsrank = "Doctor";
+                      break;
+                    case 6:
+                      var nhsrank = "Consultant";
+                      break;
+                    case 7:
+                      var nhsrank = "NHS Administration";
+                      break;
+                    case 8:
+                      var nhsrank = "Chief Medical Officer";
+                      break;
+                  }
+                  playerGroups.push("n");
+                }
+
+                if (playerGroups.length > 0) {
+                for (j = 0; j < playerGroups.length; j++) {
+                  if (playerGroups[j] == "p") {
+                    info = info + prank + " in the Altis Police";
+                  } else if (playerGroups[j] == "u") {
+                    info = info + urank + " in the UNMC";
+                  } else if (playerGroups[j] == "n") {
+                    info = info + nhsrank + " in the NHS";
+                  }
+
+                  if (j < playerGroups.length) {
+                    if (j == playerGroups.length - 2) {
+                      info = info + " and ";
+                    } else if (j < playerGroups.length - 1 && j != playerGroups.length) {
+                      info = info + ", ";
+                    }
+                  }
+                }
+              } else {
+                if (data[i]['bank'] + data[i]['cash'] <= 100000) {
+                  info = "The definition of a hobo";
+                  break;
+                } else {
+                  info = "Total Worth: £" + numberWithCommas(data[i]['bank'] + data[i]['cash']);
+                  break;
+                }
+              }
+                break;
+              }
+            }
+
+          results++;
+
+          if (verified) {
+            var divToWrite = "<div id='container--card " + i + "'><a href=../player.html?q=" + data[i]['steamid'] + "><div class='result card " + i + "'><h3 id='playerName'>"+ data[i]['name'] + "</h4><h4 id='playerID'>" + data[i]['steamid'] + "</h4><h4><i>" + info + "</i></h4><i class='material-icons'  style='color: #000;float: right; margin-right: 30px; margin-top: -42px;'>arrow_forward</i></div></a></div><br/>";
+            var reWriteDivs = divToWrite + document.getElementById("results--list").innerHTML;
+            document.getElementById("results--list").innerHTML = reWriteDivs;
+          } else {
+            var divToWrite = "<div id='container--card " + i + "'><a href=../player.html?q=" + data[i]['steamid'] + "><div class='result card " + i + "'><h3 id='playerName'>"+ data[i]['name'] + "</h4><h4 id='playerID'>" + data[i]['steamid'] + "</h4><h4><i>" + info + "</i></h4><i class='material-icons'  style='color: #000;float: right; margin-right: 30px; margin-top: -42px;'>arrow_forward</i></div></a></div><br/>";
+            document.getElementById("results--list").innerHTML += divToWrite;
+          }
+        }
+
+        if (results > 0 && results != 1) {
+          document.getElementById("results").innerHTML = "About " + results + " results";
+        } else if (results == 1) {
+          document.getElementById("results").innerHTML = results + " result";
+        } else if (results == 0) {
+          document.getElementById("results").innerHTML = results + " results";
+        }
+
+        var timeEnd = performance.now();
+        var seconds = (((timeEnd - timeStart) % 60000) / 1000).toFixed(2);
+        document.getElementById("time").innerHTML = "("+seconds +" seconds)";
+      }
+
+      function makeRequest(request) {
+        $.ajax({
+          dataType: 'json',
+          url: request,
+          data: data,
+          async: true,
+          success: success,
+          error: error
+        });
+      }
+
+      makeRequest(requestQ);
+    </script>
+
+  </head>
+  <body>
+    <div id="container">
+      <div id="container--nav">
+        <div id="inner--nav" class="">
+          <a href="index.html"><img src="assets/img/RPLogo.png" class="nav__logo" /></a>
+          <a href="../index.html" class="first after"><span class="nav_item fromLeft" data-hover="ComingSoon™">ComingSoon™</span></a>
+          <a href="https://www.roleplay.co.uk" class="first after"><span class="nav_item fromLeft" data-hover="FORUMS">FORUMS</span></a>
+        </div>
+      </div>
+
+      <div id="container--results">
+        <form action="search.html" method="GET" id="search">
+          <div id="container--card searchr">
+            <input id="rpuksba" class='information card' name="q" placeholder="" onblur="this.placeholder = urlParameters;" onfocus="this.placeholder = '';" onkeyup="urlUpdate();">
+            <span id="info" style="position: absolute; right: 15px; top: 12px;"><span id="results">...</span> <span id="time"></span></span>
+          </div><br/>
+        </form>
+
+        <div id="results--list">
+
+        </div>
+
+        <div id="container--card">
+          <div class="card">
+            Copyright © 2014 - <script type="text/javascript">document.write(new Date().getFullYear());</script> <a href="https://www.roleplay.co.uk">RoleplayUK</a>, All Rights Reserved.
+          </div>
+          <br/>
+        </div>
+      </div>
+    </div>
+    <script>
+    try {
+      console.log(urlParams['q'][0]);
+    } catch(err) {
+      window.location.replace("https://stats.roleplay.co.uk/404.html");
+    }
+
+    if (urlParams['q'][0].length < 3) {
+      document.getElementById("results").innerHTML = "Your search must be longer than two characters";
+    } else if (!urlParams['q'][0].replace(/\s/g, '').length) {
+      document.getElementById("results").innerHTML = "Your search must contain characters other than just spaces";
+    }
+
+    document.getElementById("rpuksba").placeholder = urlParams['q'][0];
+    </script>
+  </body>
+</html>

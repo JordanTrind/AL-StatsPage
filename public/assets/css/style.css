@@ -1,0 +1,614 @@
+@font-face {
+  font-family: SF-Body;
+  src: url(../fonts/SFText-Regular.otf);
+}
+
+@font-face {
+  font-family: SF-Display;
+  src: url(../fonts/SFDisplay-Bold.otf);
+}
+
+strong, b {
+  font-family: SF-Display;
+}
+
+* {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (max-width: 1684px) {
+  #container--results {
+    width: 70% !important;
+  }
+  .rpuksbc {
+    width: 96% !important;
+  }
+}
+
+@media (max-width: 1400px) {
+  #container--results {
+    width: 100% !important;
+  }
+
+  #inner--nav {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 982px) {
+  .left50 {
+    float: none;
+    width: 96% !important;
+  }
+  .right50 {
+    float:left !important;
+    position: absolute !important;
+    left: 2% !important;
+    width: 96% !important;
+    margin-top: 405px !important;
+  }
+  .player {
+    height: 830px !important;
+  }
+  #playerGroupAffiliation {
+    visibility: hidden;
+  }
+  .rpuksbc {
+    width: 96% !important;
+  }
+  #buttons {
+    line-height: 2;
+  }
+}
+
+@media (max-width: 624px) {
+  .rpuksbc > input[type="text"] {
+    margin-top: 60% !important;
+    width: 100% !important;
+    margin-left: 0% !important;
+  }
+  .ets {
+    display: none;
+  }
+  #playerName {
+    font-size: 26px !important;
+  }
+  #inner--nav {
+    width: 96% !important;
+    margin: auto;
+  }
+  .nav_item {
+    vertical-align: middle;
+    float: none;
+    margin-left: 10px !important;
+    margin-right: 0px !important;
+    margin-top: 25px !important;
+    font-size: 100% !important;
+  }
+  .nav__logo {
+    width: 50px !important;
+  }
+  #container {
+    width: 99vw !important;
+    margin-top: 20px;
+    margin-left: 0vw !important;
+    margin-right: 5vw !important;
+  }
+  #container--nav {
+    width: 100%;
+    margin-top: 50px;
+  }
+  #buttons {
+    margin-left: -5px;
+    margin-bottom: 2px !important;
+  }
+  .playerbox {
+    margin-top: -20px !important;
+  }
+  .right50 {
+    margin-top: 375px !important;
+  }
+}
+
+body {
+  width: 99vw;
+  margin: 0px 0px 0px 0px;
+  background-image: url(../img/bgs.png);
+  background-size: cover;
+    background-attachment: fixed;
+}
+
+.blur {
+  transition: 0.5s;
+  visibility: hidden;
+  opacity: 0;
+
+  background-color: rgba(0,0,0,0.7);
+
+  margin-top: -50px !important;
+  position: absolute;
+  z-index: 9;
+  width: 100%;
+  height: 100%;
+
+  transition: background-color 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: initial;
+}
+
+.active {
+  visibility: visible;
+  transition: 0.5s;
+  opacity: 0.5;
+}
+
+.inactive {
+  transition: 0.5s;
+  opacity: 0;
+  visibility: hidden;
+}
+
+#container {
+  width: 70vw;
+  margin-left: 15vw;
+  margin-right: 15vw;
+}
+
+#container--nav {
+  width: 100%;
+  margin-top: 50px;
+  position: relative;
+}
+
+#container--results {
+  width: 58.5%;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+#inner--nav {
+  width: 60%;
+  margin: auto;
+}
+
+.nav__logo {
+  width: 100px;
+}
+
+.nav_item {
+  float: right;
+  margin-top: 45px;
+  margin-left: 20px;
+  font-family: SF-Body;
+  font-weight: 700;
+  font-size: 20px;
+  color: rgba(255,255,255,1);
+  margin-right: 12px;
+}
+
+.nav_menu > a > i {
+  margin-top: 5.5%;
+  float: right;
+  color: rgba(255,255,255,1);
+}
+
+#container--search {
+  width: 100%;
+  margin-top: 25%;
+  position: relative;
+}
+
+.rpuksbc {
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: SF-Body;
+  font-size: 16px;
+  color: #BDBDBD;
+  width: 60%;
+  max-width: 900px;
+  margin:auto;
+}
+
+.rpuksba {
+  z-index: 10;
+  transform: translate(-33.3%, -0%);
+  height: 44px;
+  font-family: SF-Body;
+  font-size: 16px;
+  color: #BDBDBD;
+  width: 60%;
+  max-width: 900px;
+  min-width: 485px;
+  margin:auto;
+}
+
+.rpuksbc > .ets > a > i {
+  position: relative;
+  top: -42px;
+  right: 16px;
+  color: rgba(0,0,0,0.64) !important;
+  float: right;
+}
+
+::-webkit-input-placeholder {
+  color: rgba(0,0,0,1);
+}
+
+.rpuksbc > input[type="text"] {
+  font-family: SF-Body;
+  width: 100%;
+  margin: auto;
+  font-size: 24px;
+  border-radius: 1px;
+
+  height: 60px;
+  padding-left: 20px;
+  padding-right: 48px;
+
+  outline: none;
+  border: none;
+
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+  transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition-property: box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: initial;
+}
+
+.rpuksbc > input[type="text"]:hover {
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+  border: none;
+  transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition-property: box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: initial;
+}
+
+.rpuksbc > input[type="text"]:focus {
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+  border: none;
+  transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition-property: box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: initial;
+}
+
+.rpuksbc > span.selectors {
+  position: relative;
+  top: 5px;
+}
+
+.rpuksbc > span.selectors > label {
+  color: rgba(255,255,255,0.8);
+  margin-top: 5px;
+  margin-right: 8px;
+}
+
+.rpuksbc > span.selectors > label.information--help > i {
+  font-size: 16px !important;
+  position: relative;
+  top: 7px;
+  margin-right: 5px;
+  float: left;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+.player {
+  margin-top: 40px !important;
+  height: 500px;
+}
+
+.licences {
+  margin-top: 40px !important;
+  height: 470px;
+}
+
+.result {
+  height: 60px;
+}
+
+.card {
+  font-family: SF-Body;
+  border-radius: 1px;
+  margin: auto;
+  padding-left: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background: #fff;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+#info {
+  font-family: SF-Body;
+  opacity: 0.7;
+}
+
+a {
+  text-decoration: none;
+  width: auto;
+  padding-top: 10px;
+}
+
+a > .result, .card > #playerName  {
+  transition: 0.2s;
+  color: #039BE5;
+  text-decoration: none;
+}
+
+a > .result:hover, .card:hover  > #playerName {
+  transition: 0.2s;
+  color: #0277BD;
+  text-decoration: none;
+}
+
+.left10 {
+  float:left;
+  width: 10%;
+  max-width: 78.61px;
+  min-width: 78.61px;
+  margin-left: 0%;
+}
+
+.left50 {
+  float:left;
+  width: 47%;
+  position: absolute;
+  left: 2%;
+  margin-top: 8px;
+}
+
+.left96 {
+  float:left;
+  width: 96%;
+  position: absolute;
+  left: 2%;
+  margin-top: 8px;
+}
+.right50 {
+  float:right;
+  width: 47%;
+  position: absolute;
+  left: 51%;
+  margin-top: 8px;
+}
+
+.right90 {
+  width: 90%;
+  margin-left: 0px;
+}
+
+.card h1,h2,h3,h4 {
+  margin: 0px;
+  padding: 0px;
+}
+
+.left10 > img {
+  float: left;
+  width: 100%;
+  margin-left: -16px;
+  margin-top: -12px !important;
+  height: auto;
+  margin-top: -5px;
+  vertical-align: middle;
+}
+
+.card h4 {
+  color: rgba(0,0,0,0.6);
+}
+
+#container--card {
+  bottom: 2px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#container--footer {
+  bottom: 5px;
+  width: 100%;
+}
+
+#inner--footer {
+  width: 60%;
+  margin: auto;
+  margin-left: 8px;
+  position: absolute;
+  bottom: 8px;
+  color: rgba(255,255,255,0.4);
+  font-family: SF-Body;
+}
+
+#inner--footer > a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.4);
+  border-bottom: 2px dotted rgba(255, 255, 255, 0.4);
+}
+
+#inner--nav > a > .nav_item {
+  transition: 0.2s;
+  opacity: 0.8;
+}
+
+#inner--nav > a > .nav_item:hover {
+  transition: 0.2s;
+  opacity: 1;
+}
+
+a {
+  transition: 0.2s;
+  color: #039BE5;
+  text-decoration: none;
+}
+
+a:hover {
+  transition: 0.2s;
+  color: #0277BD;
+  text-decoration: none;
+}
+
+table {
+  width:100%;
+  font-family: SF-Body;
+  border-radius: 1px;
+  padding-left: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background: #fff;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.card > h2 {
+  margin-left: auto;
+  margin-top: -4px;
+}
+
+#label, #groupLabel, #playerSpecUnits, #playerNHSSpecUnits {
+  margin-left: -4px;
+}
+
+tr.border_bottom td {
+  border-bottom:1pt solid black;
+}
+
+.information {
+  height: 44px;
+  width: 100%;
+  font-family: SF-Body;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  color: #000000;
+  max-width: 100%;
+  min-width: 485px;
+  margin: auto;
+  padding-right: 260px;
+}
+
+form {
+  margin-bottom: 0;
+}
+
+.customEmoji {
+  font-size: 12pt;
+}
+
+#playerGUID {
+    font-size: 14px;
+    font-family: monospace;
+}
+
+#playerGroupAffiliation {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tilt {
+  -webkit-transform: rotate(1.2deg);
+}
+
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.barrel {
+    -webkit-animation-name: rotate;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+.leaderboards {
+  height: 500px;
+}
+
+.fourofourc {
+  height: auto;
+  margin-top: auto;
+  padding-top: 30px;
+  padding-bottom: 50px;
+  padding-left: 15%;
+  padding-right: 15%;
+  text-align: center;
+}
+
+.fourofour {
+  font-family: SF-Display;
+  font-size: 100px;
+}
+
+.fourofour-info {
+    font-family: SF-Body;
+    font-size: 14pt;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.muted {
+  opacity: 0.3;
+}
+
+#copyright:hover:after {
+  text-align: right;
+  content: " 2014 - 2017 RoleplayUK, All Rights Reserved.";
+}
+
+.button {
+  padding-left: 8px;
+  padding-top: 4px;
+  padding-right: 8px;
+  padding-bottom: 4px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 1px;
+
+  color: rgba(0,0,0,0.7);
+  word-wrap: normal;
+  white-space: nowrap;
+}
+
+.button:hover {
+  border: 1px solid rgba(0,0,0,0.3);
+  color: rgba(0,0,0,1);
+}
+
+#buttons {
+  margin-top: 10px;
+  margin-bottom: -10px;
+}
+
+.codeContainer {
+  margin-top: 24px;
+  font-size: 14px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+#name {
+  padding-left: 10px;
+}
+
+#number {
+  padding-right: 16px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  border-right: 1px solid rgba(0,0,0,0.1);
+}

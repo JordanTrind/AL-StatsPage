@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title>Roleplay UK - Stats</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Roleplay UK - Stats">
+    <meta name="keywords" content="Stats,roleplay,uk,name,playerid,guid,RoleplayUK,altislife,altis,life">
+    <meta name="author" content="RoleplayUK Development Team">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var leaderboardsRequest = "https://api.roleplay.co.uk/v1/statistics/leaderboards";
+    var leaderboardsData = "";
+
+    function success(data) {
+      console.log(data);
+      for (i = 0; i < data.players.bank['length']; i++) {
+        console.log(data.players.bank[i]['name'] + " - " + data.players.bank[i]['bank']);
+        document.getElementById("targetBankResults").innerHTML += "<div id='number' style='display: inline; width: 100px;'>" + (i + 1) + "</div><div id='name' style='display: inline'>" + data.players.bank[i]['name'] + "</div>: <b><div id='balance' style='display: inline'>" + data.players.bank[i]['bank'] + "</div></b><br/>";
+        document.getElementById("targetBankResults").innerHTML += "  <hr style='margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;' />";
+
+
+      }
+    }
+
+    $.ajax({
+      dataType: 'json',
+      url: leaderboardsRequest,
+      data: leaderboardsData,
+      success: success
+    });
+
+    </script>
+
+  </head>
+  <body>
+      <div id="container">
+        <div id="container--nav">
+          <div id="inner--nav" class="">
+            <a href="index.html"><img src="assets/img/RPLogo.png" class="nav__logo" /></a>
+            <a href="../index.html" class="first after"><span class="nav_item fromLeft" data-hover="ComingSoon™">ComingSoon™</span></a>
+            <a href="https://www.roleplay.co.uk" class="first after"><span class="nav_item fromLeft" data-hover="FORUMS">FORUMS</span></a>
+          </div>
+        </div>
+        <div id="container--results">
+          <div id="container--card">
+            <div class="leaderboards card">
+              <h1>Leaderboards</h1>
+
+              <div class="left50">
+                <div class="card">
+                  <div id="targetBankResults">
+                    <h2>Bank Account</h2>
+                    <hr style="margin-left: -17px;border-color: rgba(0,0,0,0.1);border-bottom: 1px;" />
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </body>
+      </html>
